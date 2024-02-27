@@ -2,8 +2,8 @@ Welcome to the AF Interview Project. This test consists of 2 parts. The first on
 
 Your tasks for today are as follows:
 Part 1:
-a) Find a bug in the code logic and fix it
-b) Optimize the ItemsManager class code
+a) Find a bug in the code logic and fix it - done?
+b) Optimize the ItemsManager class code - done?
 c) Extend the whole system by introducing a concept of a consumable item, that upon using, will either add money or a different item to the inventory.
 
 Part 2:

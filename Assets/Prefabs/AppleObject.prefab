@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 1562054653796185208}
   - component: {fileID: 8426643071871308913}
   m_Layer: 3
-  m_Name: Item
+  m_Name: AppleObject
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -32,7 +32,7 @@ Transform:
   m_Children:
   - {fileID: 8119570870960888954}
   m_Father: {fileID: 0}
-  m_RootOrder: -1
+  m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &1562054653796185208
 MonoBehaviour:
@@ -46,9 +46,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 29f9484c9ceb4edd86800f8ff98ea1e8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  item:
-    name: Apple
-    value: 10
+  item: {fileID: 11400000, guid: 351ad4a73cf630240859e25140ecb626, type: 2}
 --- !u!65 &8426643071871308913
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -110,7 +108,7 @@ MeshFilter:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 9116663650195471348}
-  m_Mesh: {fileID: 10202, guid: 0000000000000000e000000000000000, type: 0}
+  m_Mesh: {fileID: 10207, guid: 0000000000000000e000000000000000, type: 0}
 --- !u!23 &5390047537416507985
 MeshRenderer:
   m_ObjectHideFlags: 0

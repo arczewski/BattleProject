@@ -1,4 +1,6 @@
-﻿namespace AFSInterview.Items
+﻿using AFSInterview.Items.Interfaces;
+
+namespace AFSInterview.Items
 {
 	using UnityEngine;
 
@@ -6,11 +8,11 @@
 	{
 		[SerializeField] private Item item;
         
-		public Item GetItem(bool disposeHolder)
+		public Item GetItem()
 		{
-			if (disposeHolder)
-				Destroy(gameObject);
-			
+			// I prefer methods not to do too much if it is not specified in its name
+			// I didn't expect GetItem to remove something
+			// Giving back control to item manager - alternatively splitting it into Get and Remove methods would also be fine
 			return item;
 		}
 	}
