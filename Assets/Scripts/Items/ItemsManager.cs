@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using AFSInterview.Items.Interfaces;
+using UnityEngine.InputSystem;
 
 namespace AFSInterview.Items
 {
@@ -56,13 +57,15 @@ namespace AFSInterview.Items
 			}
 		}
 
-		private void Update()
+		public void OnSell(InputAction.CallbackContext value)
 		{
-			if (Input.GetMouseButtonDown(0))
-				TryPickUpItem();
-			
-			if (Input.GetKeyDown(KeyCode.Space))
-				inventoryController.SellAllItemsUpToValue(itemSellMaxValue);
+			inventoryController.SellAllItemsUpToValue(itemSellMaxValue);
+		}
+
+		public void OnMouseLeftClick(InputAction.CallbackContext value)
+		{
+			if(value.action.IsPressed())
+				TryPickUpItem(value.action.ReadValue<Vector2>());
 		}
 
 		private void SpawnNewItem()
@@ -81,9 +84,9 @@ namespace AFSInterview.Items
 			newItemTransform.rotation = Quaternion.identity;
 		}
 
-		private void TryPickUpItem()
+		private void TryPickUpItem(Vector2 clickPosition)
 		{
-			var ray = playerCamera.ScreenPointToRay(Input.mousePosition);
+			var ray = playerCamera.ScreenPointToRay(clickPosition);
 			if (!Physics.Raycast(ray, out var hit, 100f, itemPhysicLayer) || !hit.collider.TryGetComponent<IItemHolder>(out var itemHolder))
 				return;
 			
