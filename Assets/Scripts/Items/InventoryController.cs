@@ -1,4 +1,6 @@
-﻿namespace AFSInterview.Items
+﻿using System;
+
+namespace AFSInterview.Items
 {
 	using System.Collections.Generic;
 	using UnityEngine;
@@ -13,7 +15,9 @@
 
 		public void SellAllItemsUpToValue(int maxValue)
 		{
-			for (var i = 0; i < items.Count; i++)
+			// doing it from 0 to count will not work when removing during iteration - items above 'i' are shifted after removal
+			// doing it from count to 0 works because we dont care about items shifting above our index if we are iterating downwards 
+			for (var i = items.Count - 1; i >= 0; i--)
 			{
 				var itemValue = items[i].Value;
 				if (itemValue > maxValue)
