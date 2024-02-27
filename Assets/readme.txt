@@ -4,7 +4,7 @@ Your tasks for today are as follows:
 Part 1:
 a) Find a bug in the code logic and fix it - done?
 b) Optimize the ItemsManager class code - done?
-c) Extend the whole system by introducing a concept of a consumable item, that upon using, will either add money or a different item to the inventory.
+c) Extend the whole system by introducing a concept of a consumable item, that upon using, will either add money or a different item to the inventory. - done
 
 Part 2:
 Implement a system that will be used to execute fights between certain army units.

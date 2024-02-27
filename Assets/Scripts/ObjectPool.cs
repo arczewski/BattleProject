@@ -70,6 +70,7 @@ namespace AFSInterview
         Apple = 0,
         ChestWithApples = 1,
         ChestWithMoney = 2,
+        Archer = 3,
     }
 
     [Serializable]
