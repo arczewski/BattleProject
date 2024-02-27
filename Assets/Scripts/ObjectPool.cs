@@ -28,6 +28,7 @@ namespace AFSInterview
                 {
                     var preSpawnedObject = Instantiate(definition.Prefab, this.transform);
                     preSpawnedObject.SetActive(false);
+                    preSpawnedObject.AddComponent<PooledObject>().ObjectType = definition.ObjectType;
                     queue.Enqueue(preSpawnedObject);
                 }
             }
@@ -53,10 +54,12 @@ namespace AFSInterview
             return pooledObject;
         }
 
-        public void ReturnObject(ObjectType objectType, GameObject obj)
+        public void ReturnObject(GameObject obj)
         {
-            if (!_pools.TryGetValue(objectType, out var cachedObjectQueue))
-                throw new ArgumentException($"Missing prefab for {objectType}"); // or we could Destroy(obj);
+            if (!obj.TryGetComponent<PooledObject>(out var pooledObject))
+                throw new ArgumentException($"Missing PooledObject component"); // or we could Destroy(obj);
+            if (!_pools.TryGetValue(pooledObject.ObjectType, out var cachedObjectQueue))
+                throw new ArgumentException($"Missing prefab for {pooledObject.ObjectType}"); // or we could Destroy(obj);
             obj.SetActive(false);
             cachedObjectQueue.Enqueue(obj);
         }

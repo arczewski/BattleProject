@@ -92,7 +92,7 @@ namespace AFSInterview.Items
 			
 			var item = itemHolder.GetItem();
             inventoryController.AddItem(item);
-            objectPool.ReturnObject(ObjectType.Apple, hit.collider.gameObject);
+            objectPool.ReturnObject(hit.collider.gameObject);
             
             // In production environment we could have custom preprocessor conditions to disable logging - for example #if !PRODUCTION_ENV
             // Or add a wrapper around Debug.Log to have version for file/remote log aggregation and manage log level from there
