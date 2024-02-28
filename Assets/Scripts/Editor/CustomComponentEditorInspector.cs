@@ -14,11 +14,10 @@ namespace Editor
         
         private void OnEnable()
         {
-            component = (Component)target;
-            
-            if (component == null)
+            if (target is not Component targetComponent)
                 return;
-            
+
+            component = targetComponent;
             methodsWithButtonAttribute = component.GetType().GetMethods()
                 .Where(x => x.GetCustomAttributes(true).OfType<InspectorButtonAttribute>().Any()).ToArray();
         }

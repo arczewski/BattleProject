@@ -15,8 +15,9 @@ namespace AFSInterview
     [Flags]
     public enum UnitTraits
     {
-        Light, 
-        Armored, 
-        Mechanical
+        None = 0,
+        Light = 2, 
+        Armored = 4, 
+        Mechanical = 8
     }
 }

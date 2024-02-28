@@ -6,6 +6,8 @@ namespace AFSInterview.Items
 	using System;
 	using UnityEngine;
 
+	// Flyweight - scriptable objects in unity are representation of Flyweight pattern
+	// we can share single instance of item or weapon across many places in the code and thanks to that saving system memory
 	[CreateAssetMenu(fileName = "Item", menuName = "Item/New")]
 	public class Item : ScriptableObject
 	{

@@ -27,22 +27,25 @@ namespace AFSInterview
         {
             if (!allStates.TryGetValue(typeof(T), out var unitState))
                 return;
+
+            if (currentUnitState != null)
+            {
+                if (currentUnitState is UnitDeadState)
+                    return;
+                currentUnitState.enabled = false;
+            }
+
+            currentUnitState = unitState;
             unitState.enabled = true;
             OnUnitStateMachineStateChanged.Invoke(unitState);
         }
 
-        public void OnHealthReduced(int currentHealth)
+        public void OnHealthReduced(int currentHealth, int value)
         {
             if(currentHealth == 0)
                 TransitionTo<UnitDeadState>();
             else
                 TransitionTo<UnitDamagedState>();
-        }
-        
-        
-        public void OnAttackAnimationCompleted()
-        {
-            TransitionTo<UnitIdleState>();
         }
 
         public void OnDyingAnimationCompleted()

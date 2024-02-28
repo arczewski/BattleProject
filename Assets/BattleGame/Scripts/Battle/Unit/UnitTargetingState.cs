@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System.Collections;
+using System.Collections.Generic;
 using System.Linq;
 using AFSInterview.Abilities;
 using UnityEngine;
@@ -8,10 +9,10 @@ namespace AFSInterview
     public class UnitTargetingState : UnitState
     {
         [SerializeField] private int visibleRange = 1000; // should be attribute
-        [SerializeField]private ArmyAttribute armyAttribute;
-        [SerializeField]private TargetUnitAbility targetUnitAbility;
+        [SerializeField] private ArmyAttribute armyAttribute;
+        [SerializeField] private TargetUnitAbility targetUnitAbility;
+        [SerializeField] private float lookAtSpeed = 10;
         
-        private Collider[] cachedHitColliders = new Collider[40];
         private List<Unit> cachedEnemies = new List<Unit>();
         private int unitLayerMask;
         
@@ -19,10 +20,10 @@ namespace AFSInterview
         {
             unitLayerMask = LayerMask.GetMask("Unit");
             cachedEnemies.Clear();
-            var size = Physics.OverlapSphereNonAlloc(transform.position, visibleRange, cachedHitColliders, unitLayerMask);
-            for (int i = 0; i < size; i++)
+            var colliders = Physics.OverlapSphere(transform.position, visibleRange, unitLayerMask);
+            for (int i = 0; i < colliders.Length; i++)
             {
-                var unitObject = cachedHitColliders[i].gameObject;
+                var unitObject = colliders[i].gameObject;
                 var unit = unitObject.GetComponent<Unit>();
                 var enemyArmyAttribute = unit.GetComponent<ArmyAttribute>();
                 if (enemyArmyAttribute.ArmyName == armyAttribute.ArmyName)
@@ -60,6 +61,19 @@ namespace AFSInterview
             
             var randomEnemy = cachedEnemies[UnityEngine.Random.Range(0, cachedEnemies.Count)];
             targetUnitAbility.SetTarget(randomEnemy);
+            StartCoroutine(RotateTowardsTarget(randomEnemy));
+        }
+
+        private IEnumerator RotateTowardsTarget(Unit targetUnit)
+        {
+            var target = targetUnit.transform;
+            while(Vector3.Angle(transform.forward, target.position - transform.position) > 0.1f) {
+                Vector3 direction = (target.position - transform.position).normalized;
+                Quaternion lookRotation = Quaternion.LookRotation(direction);
+                transform.rotation = Quaternion.Lerp(transform.rotation, lookRotation, lookAtSpeed * Time.deltaTime);
+
+                yield return null;
+            }
             stateMachine.TransitionTo<UnitAttackState>();
         }
     }

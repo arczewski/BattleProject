@@ -7,8 +7,20 @@ namespace AFSInterview
 {
     public class ObjectPool : MonoBehaviour
     {
+        // I don't like singletons but for prototyping and game session long life objects I am willing to let it be :D 
+        // Also I need to use and describe 2 design patterns and this one is the easiest one and actually often used in game development
+        // Singleton pattern - single object instance across application accessible from "everywhere"
+        // Pros - easy to use, makes development faster
+        // Cons - tight coupling, not immediately visible because it is not injected anywhere so harder to test and track function dependencies, bad with multithreading
+        public static ObjectPool Instance { get; private set; } 
+        
         [SerializeField] private PoolObjectDefinition[] _poolObjectDefinitions;
         private Dictionary<ObjectType, Queue<GameObject>> _pools = new Dictionary<ObjectType, Queue<GameObject>>();
+
+        private void Awake()
+        {
+            Instance = this;
+        }
 
         private void Start()
         {
@@ -71,6 +83,7 @@ namespace AFSInterview
         ChestWithApples = 1,
         ChestWithMoney = 2,
         Archer = 3,
+        Arrow = 4,
     }
 
     [Serializable]

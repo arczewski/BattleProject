@@ -6,14 +6,13 @@ namespace AFSInterview
 {
     public class UnitAttackState : UnitState
     {
-        [SerializeField] private Animator animator;
-        [SerializeField] private AttackAbility attackAbility;
+        [SerializeField] private DistanceAttackAbility distanceAttackAbility;
         [SerializeField] private TargetUnitAbility targetUnitAbility;
         
 
         private void OnEnable()
         {
-            if (!attackAbility.IsReady())
+            if (!distanceAttackAbility.IsReady())
             {
                 stateMachine.TransitionTo<UnitIdleState>();
                 return;
@@ -25,13 +24,19 @@ namespace AFSInterview
                 return;
             }
 
+            distanceAttackAbility.AttackCompleted.AddListener(OnAttackCompleted);
             var targetHealthAttribute = targetUnitAbility.Target.GetComponent<HealthAttribute>();
             var targetArmorAttribute = targetUnitAbility.Target.GetComponent<ArmorAttribute>();
             var unitTraitsAttribute = targetUnitAbility.Target.GetComponent<UnitTraitsAttribute>();
-
+            
             Debug.Log($"Attacking {targetUnitAbility.Target.gameObject.name}");
-            attackAbility.Attack(targetHealthAttribute, targetArmorAttribute, unitTraitsAttribute);
-            animator.SetTrigger("Attack");
+            distanceAttackAbility.InitiateAttack(targetUnitAbility.Target.transform.position, targetHealthAttribute, targetArmorAttribute, unitTraitsAttribute);
+        }
+
+        private void OnAttackCompleted()
+        {
+            distanceAttackAbility.AttackCompleted.RemoveListener(OnAttackCompleted);
+            stateMachine.TransitionTo<UnitIdleState>();
         }
     }
 }

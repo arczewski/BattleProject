@@ -8,7 +8,7 @@ namespace AFSInterview
 
         private void OnEnable()
         {
-            //_animator.SetTrigger("Damaged");
+            _animator.SetTrigger("Dead");
         }
     }
 }
