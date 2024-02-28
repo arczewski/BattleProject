@@ -10,7 +10,8 @@ namespace AFSInterview
 
         private void Awake()
         {
-            camera ??= Camera.main;
+            if(camera == null)
+                camera = Camera.main;
         }
         void Update()
         {
